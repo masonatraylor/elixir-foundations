@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elixir OTP Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+</head>
+<body>
+    <div id="ui-container">
+        <header>
+            <h1>Elixir / OTP Simulation</h1>
+            <p>Low-poly Isometric Actor Model</p>
+        </header>
+        <div class="controls">
+            <button id="toggle-sim-btn">Pause Simulation</button>
+            <div class="legend">
+                <div class="legend-item"><span class="color-box supervisor"></span> Supervisor</div>
+                <div class="legend-item"><span class="color-box genserver"></span> GenServer (State)</div>
+                <div class="legend-item"><span class="color-box worker"></span> Worker Process</div>
+                <div class="legend-item"><span class="color-box msg"></span> Message (Red) / Restart (Green)</div>
+            </div>
+        </div>
+    </div>
+    <div id="canvas-container"></div>
+    <script src="app.js"></script>
+</body>
+</html>
