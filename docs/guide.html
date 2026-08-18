@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elixir Foundational Knowledge Guide</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #2d3436;
+            --accent: #6c5ce7;
+            --code-bg: #f1f2f6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            min-height: 100vh;
+        }
+        nav {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        nav a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background-color: var(--accent);
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        nav a:hover {
+            background-color: #4a3eb1;
+        }
+        h1, h2, h3 {
+            color: #2d3436;
+            margin-top: 1.5em;
+        }
+        h1 {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #d63031;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .elixir-keyword { color: #ff79c6; }
+        .elixir-string { color: #f1fa8c; }
+        .elixir-comment { color: #6272a4; }
+        .elixir-atom { color: #bd93f9; }
+        .elixir-func { color: #50fa7b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html">← Back to 3D Simulation</a>
+        </nav>
+
+        <h1>Elixir Foundational Knowledge Guide</h1>
+
+        <p>Welcome to Elixir! Elixir is a dynamic, functional language designed for building scalable and maintainable applications. It leverages the Erlang VM (BEAM), known for running low-latency, distributed, and fault-tolerant systems.</p>
+
+        <p>This guide covers the essential concepts needed to read, write, and understand Elixir code.</p>
+
+        <h2>1. Functional Programming Basics</h2>
+
+        <p>Elixir is deeply functional. Data is <strong>immutable</strong> and state is never mutated directly; instead, functions return new copies of data.</p>
+
+        <h3>Immutability</h3>
+        <p>When you "modify" a data structure, Elixir returns a new data structure under the hood, sharing as much memory as possible with the old one (structural sharing).</p>
+<pre><code><span class="elixir-comment"># 'list' remains [1, 2, 3]</span>
+list = [1, 2, 3]
+new_list = [0 | list] <span class="elixir-comment"># [0, 1, 2, 3]</span>
+</code></pre>
+
+        <h3>The Pipe Operator (<code>|&gt;</code>)</h3>
+        <p>One of Elixir's most famous features is the pipe operator. It passes the result of the expression on its left as the <em>first argument</em> to the function call on its right.</p>
+<pre><code><span class="elixir-comment"># Instead of this nested mess:</span>
+<span class="elixir-keyword">String</span>.upcase(<span class="elixir-keyword">String</span>.trim(<span class="elixir-string">"  hello  "</span>))
+
+<span class="elixir-comment"># We do this:</span>
+<span class="elixir-string">"  hello  "</span>
+|&gt; <span class="elixir-keyword">String</span>.trim()
+|&gt; <span class="elixir-keyword">String</span>.upcase()
+<span class="elixir-comment"># =&gt; "HELLO"</span>
+</code></pre>
+
+        <h2>2. Pattern Matching</h2>
+
+        <p>In Elixir, <code>=</code> is not just an assignment operator; it's a <strong>match operator</strong>. It tries to make the left side match the right side.</p>
+
+<pre><code><span class="elixir-comment"># Basic match</span>
+x = 1
+
+<span class="elixir-comment"># Destructuring a Tuple</span>
+{<span class="elixir-atom">:ok</span>, result} = {<span class="elixir-atom">:ok</span>, <span class="elixir-string">"success"</span>}
+<span class="elixir-comment"># result is now "success"</span>
+
+<span class="elixir-comment"># This will raise a MatchError because :error does not match :ok</span>
+{<span class="elixir-atom">:ok</span>, result} = {<span class="elixir-atom">:error</span>, <span class="elixir-string">"failed"</span>}
+</code></pre>
+
+        <h3>Pattern Matching in Functions</h3>
+        <p>Elixir allows you to define the same function multiple times with different patterns (Function Clauses). It executes the first one that matches the arguments.</p>
+
+<pre><code><span class="elixir-keyword">def</span> <span class="elixir-func">handle_response</span>({<span class="elixir-atom">:ok</span>, body}) <span class="elixir-keyword">do</span>
+  <span class="elixir-keyword">IO</span>.puts(<span class="elixir-string">"Success: #{body}"</span>)
+<span class="elixir-keyword">end</span>
+
+<span class="elixir-keyword">def</span> <span class="elixir-func">handle_response</span>({<span class="elixir-atom">:error</span>, reason}) <span class="elixir-keyword">do</span>
+  <span class="elixir-keyword">IO</span>.puts(<span class="elixir-string">"Failed: #{reason}"</span>)
+<span class="elixir-keyword">end</span>
+</code></pre>
+
+        <h2>3. Concurrency (The Actor Model)</h2>
+
+        <p>Elixir's concurrency is based on the Actor Model. All code runs inside lightweight threads called <strong>processes</strong> (not OS processes). Processes are isolated, run concurrently, and communicate via message passing.</p>
+
+<pre><code><span class="elixir-comment"># Spawning a new process</span>
+pid = spawn(<span class="elixir-keyword">fn</span> -&gt; 
+  <span class="elixir-keyword">receive</span> <span class="elixir-keyword">do</span>
+    <span class="elixir-comment"># Include self() in the reply so the receiver knows who sent it</span>
+    {<span class="elixir-atom">:ping</span>, sender} -&gt; send(sender, {<span class="elixir-atom">:pong</span>, self()})
+  <span class="elixir-keyword">end</span>
+<span class="elixir-keyword">end</span>)
+
+<span class="elixir-comment"># Sending a message</span>
+send(pid, {<span class="elixir-atom">:ping</span>, self()})
+
+<span class="elixir-comment"># Receiving a message</span>
+<span class="elixir-keyword">receive</span> <span class="elixir-keyword">do</span>
+  {<span class="elixir-atom">:pong</span>, ^pid} -&gt; <span class="elixir-keyword">IO</span>.puts(<span class="elixir-string">"Got pong from the exact process we expected!"</span>)
+<span class="elixir-keyword">after</span>
+  1000 -&gt; <span class="elixir-keyword">IO</span>.puts(<span class="elixir-string">"Timeout!"</span>)
+<span class="elixir-keyword">end</span>
+</code></pre>
+
+        <h2>4. OTP (Open Telecom Platform)</h2>
+
+        <p>While <code>spawn</code>, <code>send</code>, and <code>receive</code> are powerful, managing state, errors, and process lifecycles manually is tedious. <strong>OTP</strong> is a set of abstractions that handle this for you.</p>
+
+        <h3>GenServer (Generic Server)</h3>
+        <p>A GenServer is a behavior module for implementing the server of a client-server relation. It's the standard way to maintain state and handle asynchronous/synchronous operations.</p>
+
+        <p><em>Crucially, GenServers do not mutate state.</em> Under the hood, a GenServer is an infinite recursive loop. When a callback returns a new state, that state is passed as an argument to the next iteration of the loop.</p>
+
+        <ul>
+            <li><strong><code>init/1</code></strong>: Sets the initial state.</li>
+            <li><strong><code>handle_call/3</code></strong>: Synchronous requests. Returns <code>{:reply, response, new_state}</code>.</li>
+            <li><strong><code>handle_cast/2</code></strong>: Asynchronous requests (fire and forget). Returns <code>{:noreply, new_state}</code>.</li>
+            <li><strong><code>handle_info/2</code></strong>: Handles messages sent directly via <code>send/2</code>.</li>
+        </ul>
+
+        <h3>Supervisors</h3>
+        <p>Elixir embraces the "let it crash" philosophy. Instead of defensive programming (catching every possible exception), we let processes crash and have <strong>Supervisors</strong> restart them in a known good state.</p>
+
+<pre><code>children = [
+  <span class="elixir-comment"># Starts the Worker module</span>
+  {Worker, initial_state}
+]
+
+<span class="elixir-comment"># The Supervisor will restart the Worker if it crashes</span>
+<span class="elixir-keyword">Supervisor</span>.start_link(children, <span class="elixir-atom">strategy:</span> <span class="elixir-atom">:one_for_one</span>)
+</code></pre>
+
+        <h2>5. Mix and ExUnit</h2>
+
+        <ul>
+            <li><strong>Mix</strong> is Elixir's build tool. It creates projects (<code>mix new</code>), manages dependencies, compiles code, and runs tests.</li>
+            <li><strong>ExUnit</strong> is the built-in test framework. It uses macros (like <code>assert</code>) to write clean, concurrent tests.</li>
+        </ul>
+
+        <hr>
+        <p><em>Check out the source code in the <code>elixir_foundations</code> repository to see these concepts implemented in practice!</em></p>
+    </div>
+</body>
+</html>

@@ -38,7 +38,22 @@ body, html {
 }
 
 header h1 { margin: 0 0 5px 0; color: #2d3436; font-size: 1.5rem; font-weight: 800; }
-header p { margin: 0 0 15px 0; color: #636e72; font-size: 0.9rem; font-weight: 500; }
+header p { margin: 0 0 10px 0; color: #636e72; font-size: 0.9rem; font-weight: 500; }
+
+.guide-btn {
+    display: block;
+    text-align: center;
+    background-color: #6c5ce7;
+    color: white;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    transition: background 0.2s;
+}
+.guide-btn:hover { background-color: #5b4bc4; }
 
 .controls button {
     background-color: #0984e3; color: white; border: none; padding: 12px 15px;
