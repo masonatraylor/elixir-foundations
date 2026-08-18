@@ -4,8 +4,8 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #87CEEB; /* Sky blue */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #74b9ff; /* Brighter sky blue */
 }
 
 #canvas-container {
@@ -22,9 +22,10 @@ body, html {
     background: rgba(255, 255, 255, 0.95);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     max-width: 300px;
     pointer-events: auto;
+    border: 1px solid #dfe6e9;
 }
 
 @media (max-width: 600px) {
@@ -45,63 +46,101 @@ body, html {
 
 header h1 {
     margin: 0 0 5px 0;
-    color: #4e2a8e; /* Elixir Purple */
+    color: #2d3436;
     font-size: 1.5rem;
+    font-weight: 800;
 }
 
 header p {
     margin: 0 0 15px 0;
-    color: #666;
+    color: #636e72;
     font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .controls button {
-    background-color: #4e2a8e;
+    background-color: #0984e3;
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
+    padding: 12px 15px;
+    border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
     width: 100%;
     font-weight: bold;
-    transition: background 0.2s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+    box-shadow: 0 4px 0 #074a80;
 }
 
 .controls button:hover {
-    background-color: #3b1f6b;
+    background-color: #74b9ff;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #074a80;
 }
 
 .controls button.paused {
-    background-color: #e74c3c;
+    background-color: #d63031;
+    box-shadow: 0 4px 0 #8c1e1e;
 }
 
 .controls button.paused:hover {
-    background-color: #c0392b;
+    background-color: #ff7675;
+    box-shadow: 0 2px 0 #8c1e1e;
 }
 
 .legend {
-    margin-top: 15px;
+    margin-top: 20px;
     font-size: 0.85rem;
-    color: #333;
+    color: #2d3436;
+    background: #f5f6fa;
+    padding: 10px;
+    border-radius: 6px;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.legend-item:last-child {
+    margin-bottom: 0;
 }
 
 .color-box {
     width: 14px;
     height: 14px;
     margin-right: 10px;
-    border-radius: 3px;
+    border-radius: 4px;
     display: inline-block;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
 }
 
-.color-box.supervisor { background: #4e2a8e; }
-.color-box.genserver { background: #3498db; }
-.color-box.worker { background: #f39c12; }
-.color-box.msg { background: linear-gradient(135deg, #e74c3c 50%, #2ecc71 50%); }
+.color-box.supervisor { background: #6c5ce7; }
+.color-box.genserver { background: #0984e3; }
+.color-box.worker { background: #fdcb6e; }
+.color-box.msg { background: linear-gradient(135deg, #d63031 50%, #00b894 50%); }
+
+.floating-label {
+    position: absolute;
+    top: 0; left: 0;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #2d3436;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #dfe6e9;
+    white-space: nowrap;
+    z-index: 5;
+    transition: opacity 0.2s;
+}
+
+.floating-label.dead {
+    background: rgba(214, 48, 49, 0.9);
+    color: white;
+    border-color: #c0392b;
+}
